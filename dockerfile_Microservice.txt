@@ -1,0 +1,23 @@
+FROM centos:7
+MAINTAINER jack<changandaxuel@126.com>
+
+ENV MYPATH /usr/local
+WORKDIR $MYPATH
+
+USER root
+RUN echo "Welcome to use my centos 7.0"
+RUN mkdir /usr/local/java
+RUN mkdir /usr/data/
+ADD jdk-8u211-linux-x64.tar.gz /usr/local/java/
+ADD DockerDemo03-Docker-Microservice-1.0-SNAPSHOT.jar /usr/data/Microservice.jar
+ENV JAVA_HOME /usr/local/java/jdk1.8.0_211
+ENV JRE_HOME $JAVA_HOME/jre
+ENV CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib:$CLASSPATH
+ENV PATH $JAVA_HOME/bin:$PATH
+
+EXPOSE 6001
+VOLUME /tmp
+ENTRYPOINT ["java", "-jar"]
+CMD ["/usr/data/Microservice.jar"]
+
+

@@ -1,0 +1,28 @@
+FROM centos:7
+MAINTAINER jack<changandaxuel@126.com>
+
+ENV MYPATH /usr/local
+WORKDIR $MYPATH
+
+USER root
+RUN echo "welcom to use my centos 7"
+RUN mkdir /usr/local/java
+RUN mkdir /usr/data/
+ADD jdk-17_linux-x64_bin.tar.gz /usr/local/java/
+ADD DockerDemo01-1.0-SNAPSHOT.jar /usr/data/sayHello.jar
+ADD DockerDemo02-1.0-SNAPSHOT.jar /usr/data/sayGoodbye.jar
+ENV JAVA_HOME /usr/local/java/jdk-17.0.8
+ENV JRE_HOME $JAVA_HOME/jre
+ENV CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib:$CLASSPATH
+ENV PATH $JAVA_HOME/bin:$PATH
+
+EXPOSE 80
+
+CMD echo $MYPATH >> /usr/data/hello.txt
+CMD echo "success--1-----------ok" >> /usr/data/hello.txt
+CMD echo "success--2-----------ok" >> /usr/data/hello.txt
+CMD echo "success--3-----------ok" >> /usr/data/hello.txt
+CMD echo "success--4-----------ok" >> /usr/data/hello.txt
+ENTRYPOINT ["java", "-jar"]
+CMD ["/usr/data/sayHello.jar"]
+
